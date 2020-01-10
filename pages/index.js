@@ -9,7 +9,7 @@ return (
 <ul>
     <li>
       <Link href='/view'>
-        <a>view&edit</a>
+        <a>view</a>
       </Link>
     </li>
     <li>
