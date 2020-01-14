@@ -74,8 +74,11 @@ app.prepare().then(() => {
       }
     })
 
-  server.get('/view', (req, res) => {
-    return app.render(req, res, '/view', req.query)
+  server.get(
+    '/view/:id', 
+    async (req, res) => {
+    const post = await PostModel.findOne({_id: req.params.id});
+    return app.render(req, res, '/view', {post, id: req.params.id})
   })
 
   server.get('/b', (req, res) => {
@@ -88,7 +91,6 @@ app.prepare().then(() => {
   })
 
   server.get('/', async (req, res) => {
-    const posts = await PostModel.find({});
     return app.render(req, res, '/index', req.query)
   })
 

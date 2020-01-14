@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
+import { Button } from './Button'
 
 export const Form = (props) => {
-    const [name, setName] = useState('')
+    const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
+    const autor = props.autor
 
     const onChangeName = (e) => {
-        setName(e.target.value)
+        setTitle(e.target.value)
     }
 
     const onChangeDescription = (e) => {
@@ -14,17 +16,35 @@ export const Form = (props) => {
 
     const submit = async (e) => {
         e.preventDefault();
-        await props.newPost({ name, description });
-        setName('');
+        const createdDate = new Date().toUTCString()
+        const data = {
+            post: {
+                title, description, autor, createdDate
+            },
+            id: props.id
+        }
+        await props.newPost(data);
+        setTitle('');
         setDescription('')
-
     }
 
     return (
         <form onSubmit={submit}>
-            <input type='text' placeholder='name' value={name} onChange={onChangeName} />
-            <input type='text' placeholder='desription' value={description} onChange={onChangeDescription} />
-            <button type='submit'>Submit</button>
+            <input
+                type='text'
+                placeholder='Заголовок'
+                value={title}
+                onChange={onChangeName}
+            />
+            <input
+                type='text'
+                placeholder='Описание'
+                value={description}
+                onChange={onChangeDescription} />
+            <Button 
+                type='submit'>
+                Отправить
+            </Button>
         </form>
     )
 }
